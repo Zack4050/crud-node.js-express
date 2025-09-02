@@ -1,5 +1,8 @@
+const path = require('path');
+
 const index = (req, res) => {
-    res.send('Hola mundo!');
+    //console.log(__dirname);
+    res.sendFile(path.resolve(__dirname, '../../private/index.html'));
 }
 
 module.exports = {

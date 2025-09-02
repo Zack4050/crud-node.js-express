@@ -1,0 +1,13 @@
+h1 {    
+    color: rgb(8, 133, 12);
+}
+
+body {
+    background-color: rgb(255, 255, 255);
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
