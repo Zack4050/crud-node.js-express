@@ -64,6 +64,20 @@ const update = (req, res) => {
     res.redirect("/categorias");
 }
 
+//Funcion para eliminar una categoria
+const destroy = (req, res) => {
+    const {id} = req.params;
+    const index = categorias.findIndex( (categoria) => categoria.id == id);
+
+    if(index === -1) {
+        return res.status(404).send("Categoria no encontrada");
+    }    
+
+    //A partir del indice, elimina 1 elemento
+    categorias.splice(index, 1);
+    res.redirect("/categorias");
+}
+
 
 module.exports = {
     create,
@@ -71,5 +85,6 @@ module.exports = {
     index,
     show,
     edit,
-    update
+    update,
+    destroy
 }

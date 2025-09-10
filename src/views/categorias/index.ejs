@@ -14,8 +14,30 @@
             <td><a href="/categorias/<%= categoria.id %>"><%= categoria.nombre %></a></td>
             <td>
                 <a href="/categorias/<%= categoria.id %>/edit">Edit</a>
+                <form 
+                class="from-delete "
+                action="/categorias/<%= categoria.id %>?_method=DELETE" 
+                method = "post">
+                
+                <button type="submit">Borrar</button>
+                </form>
             </td>
         </tr>
         <% }) %>
     </body>
 </table>
+
+
+// Confirmación de eliminación
+<script>
+    document.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (event.target.classList.contains("from-delete")) {
+            const confirmar = confirm("¿Estás seguro de que deseas eliminar esta categoría?");
+            if (confirmar) {
+                event.target.submit();
+            }
+        }
+    });
+</script>
