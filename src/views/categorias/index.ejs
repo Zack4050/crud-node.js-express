@@ -1,12 +1,13 @@
-<h1>Listado de Categorias</h1>
+<h1>Listado de Productos</h1>
 
-<a class = "button button--primary" href="/categorias/create">Crear una categoria</a>
+<a class = "button button--primary" href="/categorias/create">Agregar un producto</a>
 
 <section class="categorias">
 <table>
     <thead> 
         <tr>
-            <th>Nombre</th>
+            <th>Producto</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <body>
@@ -14,13 +15,13 @@
         <tr>
             <td><a href="/categorias/<%= categoria.id %>"><%= categoria.name %></a></td>
             <td class="cell-inline">
-                <a class="button button--primary" href="/categorias/<%= categoria.id %>/edit">Edit</a>
+                <a class="button button--primary" href="/categorias/<%= categoria.id %>/edit">Editar</a>
                 <form
                 class="from-delete"
                 action="/categorias/<%= categoria.id %>?_method=DELETE" 
                 method = "post">
                 
-                <button class="button button--danger" type="submit">Borrar</button>
+                <button class="button button--danger" type="submit">Eliminar</button>
                 </form>
             </td>
         </tr>

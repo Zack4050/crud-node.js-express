@@ -1,9 +1,4 @@
-const fs = require("fs");
-const path = require("path");
-
-//Simulacion de base de datos
-let categorias = [];
-
+//Importamos el modelo
 const model  = require("../models/Category");
 
 //Funcion para mostrar el formulario
@@ -52,66 +47,46 @@ const show = (req, res) => {
 
 //Funcion para mostrar el formulario de edicion
 const edit = (req, res) => {
-    categorias = JSON.parse(
-        fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
-    );
-
     const {id} = req.params;
-    const categoria = categorias.find( (categoria) => categoria.id == id);
-
-    if(!categoria) {
-        return res.status(404).send("Categoria no encontrada");
-    }
-
-    res.render("categorias/edit", {categoria} );
+    model.findById(id, (error, categoria) => {
+        if (error) {
+            return res.status(500).send("Error al leer la categoria");
+        }
+        if (!categoria) {
+            return res.status(404).send("Categoria no encontrada");
+        }
+        res.render("categorias/edit", {categoria} );
+    });
 }
 
 //Funcion para actualizar una categoria
 const update = (req, res) => {
-    categorias = JSON.parse(
-        fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
-    );
-
     const {id} = req.params;
-    const {nombre} = req.body;
+    const {name} = req.body;
 
-    const categoria = categorias.find( (categoria) => categoria.id == id);
-
-    if(!categoria) {
-        return res.status(404).send("Categoria no encontrada");
-    }
-    categoria.nombre = nombre;
-
-    fs.writeFileSync(
-        path.resolve(__dirname, "../../categorias.json"),
-        JSON.stringify(categorias)
-    );
-
-    res.redirect("/categorias");
+    model.update(id, name, (error, changes) => {
+        if (error) {
+            return res.status(500).send("Error al actualizar la categoria");
+        }
+        if (changes === 0) {
+            return res.status(404).send("Categoria no encontrada");
+        }
+        res.redirect("/categorias");
+    });
 }
 
 //Funcion para eliminar una categoria
 const destroy = (req, res) => {
-    categorias = JSON.parse(
-        fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
-    );
-
     const {id} = req.params;
-    const index = categorias.findIndex( (categoria) => categoria.id == id);
-
-    if(index === -1) {
-        return res.status(404).send("Categoria no encontrada");
-    }    
-
-    //A partir del indice, elimina 1 elemento
-    categorias.splice(index, 1);
-
-    fs.writeFileSync(
-        path.resolve(__dirname, "../../categorias.json"), 
-        JSON.stringify(categorias)
-    );
-
-    res.redirect("/categorias");
+    model.destroy(id, (error, changes) => {
+        if (error) {
+            return res.status(500).send("Error al eliminar la categoria");
+        }
+        if (changes === 0) {
+            return res.status(404).send("Categoria no encontrada");
+        }
+        res.redirect("/categorias");
+    });
 }
 
 
