@@ -1,8 +1,9 @@
 <h1>Listado de Categorias</h1>
 
-<a href="/categorias/create">Crear una categoria</a>
+<a class = "button button--primary" href="/categorias/create">Crear una categoria</a>
 
-<table border = 1>
+<section class="categorias">
+<table>
     <thead> 
         <tr>
             <th>Nombre</th>
@@ -11,24 +12,24 @@
     <body>
         <% categorias.forEach(categoria => { %>
         <tr>
-            <td><a href="/categorias/<%= categoria.id %>"><%= categoria.nombre %></a></td>
-            <td>
-                <a href="/categorias/<%= categoria.id %>/edit">Edit</a>
-                <form 
-                class="from-delete "
+            <td><a href="/categorias/<%= categoria.id %>"><%= categoria.name %></a></td>
+            <td class="cell-inline">
+                <a class="button button--primary" href="/categorias/<%= categoria.id %>/edit">Edit</a>
+                <form
+                class="from-delete"
                 action="/categorias/<%= categoria.id %>?_method=DELETE" 
                 method = "post">
                 
-                <button type="submit">Borrar</button>
+                <button class="button button--danger" type="submit">Borrar</button>
                 </form>
             </td>
         </tr>
         <% }) %>
     </body>
 </table>
+</section>
 
-
-// Confirmación de eliminación
+<!-- confirmacion de eliminacion -->
 <script>
     document.addEventListener("submit", (event) => {
         event.preventDefault();
