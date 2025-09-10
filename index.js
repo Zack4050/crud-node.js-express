@@ -1,8 +1,10 @@
 require('dotenv').config();
 
-
 const express = require('express');
 const app = express();
+
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
 
 const layouts = require('express-ejs-layouts');
 
@@ -24,6 +26,8 @@ const mainRouter = require('./src/routes/main.router');
 const req = require('express/lib/request');
 app.use(mainRouter);
 
+
+app.use('/categorias',require('./src/routes/categorias.router'));
 app.use('/productos',require('./src/routes/productos.router'));
 app.use('/contacto',require('./src/routes/contacto.router'));
 
