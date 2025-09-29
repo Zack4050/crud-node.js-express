@@ -2,7 +2,7 @@
 
 <form class="form" action="/categorias/<%= categoria.id %>?_method=PUT"method = "post">
     <div class="form_group">
-        <label class="form_label" for="nombre">Nombre del Producto: </label>
+        <label class="form_label" for="nombre">Nombre de la categoría: </label>
         <input class="form_input" type="text" name="name" id="nombre" value="<%= categoria.name %>">
     </div>
     <button class="button button--primary" type = "submit">Guardar</button>

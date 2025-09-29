@@ -1,0 +1,21 @@
+<h1>Crear Producto</h1>
+
+<form class="form" action="/productos"method = "post">
+    <div class="form_group">
+        <label class="form_label" for="nombre">Nombre: </label>
+        <input class="form_input" type="text" name="name" id="nombre">
+
+        <label class="form_label" for="categoria">Categoria: </label>
+        <input class="form_input" type="int" name="category_id" id="categoria">   
+
+        <label class="form_label" for="precio">Precio: </label>
+        <input class="form_input" type="int" name="price" id="precio">
+
+        <label class="form_label" for="stock">Stock: </label>
+        <input class="form_input" type="int" name="stock" id="stock">
+
+        <label class="form_label" for="descripcion">Descripcion: </label>
+        <input class="form_input" type="text" name="description" id="descripcion">
+    </div>
+    <button class="button button--primary" type = "submit">Guardar</button>
+</form>
