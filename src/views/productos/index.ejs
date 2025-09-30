@@ -1,24 +1,24 @@
-<h1>Listado de Categorías</h1>
+<h1>Listado de Productos</h1>
 
-<a class = "button button--primary" href="/categorias/create">Agregar categoría</a>
+<a class = "button button--primary" href="/productos/create">Agregar producto</a>
 
 <section class="listados">
 <table>
     <thead> 
         <tr>
-            <th>Categoría</th>
+            <th>Producto</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <body>
-        <% categorias.forEach(categoria => { %>
+        <% productos.forEach(producto => { %>
         <tr>
-            <td><a href="/categorias/<%= categoria.id %>"><%= categoria.name %></a></td>
+            <td><a href="/productos/<%= producto.id %>"><%= producto.name %></a></td>
             <td class="cell-inline">
-                <a class="button button--primary" href="/categorias/<%= categoria.id %>/edit">Editar</a>
+                <a class="button button--primary" href="/productos/<%= producto.id %>/edit">Editar</a>
                 <form
                 class="from-delete"
-                action="/categorias/<%= categoria.id %>?_method=DELETE" 
+                action="/productos/<%= producto.id %>?_method=DELETE" 
                 method = "post">
                 
                 <button class="button button--danger" type="submit">Eliminar</button>
