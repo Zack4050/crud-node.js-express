@@ -67,19 +67,57 @@ h1 {
 .button {
     display: inline-block;
     border-radius: 15px;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid gray;
+    padding: 0.5rem 0.5rem;
+    border: 2px solid gray;
 }
 
-.button:hover {
-    background-color: lightgray;
+.alejar{
+    margin-bottom: 1rem;
+}
+
+.btn-aceptar {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: dodgerblue;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+}
+
+.btn-cancelar {
+    display: inline-block;      /* hace que respete padding y ancho */
+    padding: 10px 20px;         /* igual que tu botón */
+    background-color: #f44336;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;      /* quita el subrayado */
+    text-align: center;          /* centra el texto */
+    cursor: pointer;
+    font-family: inherit;        /* igual que el botón */
+    font-size: inherit;          /* igual que el botón */
+}
+
+.btn-aceptar:hover {
+    background-color: lightblue;
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px gray;
+}
+
+.btn-cancelar:hover {
+    background-color: #e53935;
     transition: 0.3s;
     box-shadow: 1px 1px 5px gray;
 }
 
 .button--primary {
     background-color: dodgerblue;
-    border: 1px solid snow;
+    border: 5px solid snow;
 }
 
 .button--danger {
@@ -88,14 +126,52 @@ h1 {
     border-radius: 5px;
 }
 
-.form_group{
-    margin-bottom: 0.5rem;
+.form_group {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
 }
 
 .form_group {
     padding: 0.25rem;
     border-radius: 5px;
     border: 1px solid gray;
+}
+
+.form_label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form_input {
+    width: 95%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form_input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.form_buttons {
+    text-align: center;
+}
+
+.form_button_right {
+    margin-left: 10px;  
+    margin-right: 0;
+    float: right;
 }
 
 .imagen {
@@ -122,4 +198,24 @@ p {
     font-size: 1.2rem;
     display: flex;
     justify-content: center;
+}
+
+
+
+/* Cambiar tamaño de los botones de paginación */
+.dataTables_wrapper .dataTables_paginate a {
+    font-size: 16px;      /* tamaño del texto */
+    padding: 6px 12px;    /* tamaño del botón */
+    background-color: #007bff; /* color de fondo */
+    color: white;         /* color del texto */
+    border-radius: 4px;   /* bordes redondeados */
+    text-decoration: none; 
+    margin: 0 2px;        /* separación entre botones */
+}
+
+/* Cambiar estilo del botón activo (el que muestra el número de página actual) */
+.dataTables_wrapper .dataTables_paginate .current {
+    background-color: #0056b3;
+    color: white;
+    font-weight: bold;
 }

@@ -1,36 +1,55 @@
 <h1>Listado de Productos</h1>
 
-<a class = "button button--primary" href="/productos/create">Agregar producto</a>
+<a href="/productos/create" class="btn-aceptar alejar">Agregar producto</a>
 
-<section class="listados">
-<table>
-    <thead> 
+<table id="productosTable" class="display">
+    <thead>
         <tr>
-            <th>Producto</th>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
             <th>Acciones</th>
         </tr>
     </thead>
-    <body>
+    <tbody>
         <% productos.forEach(producto => { %>
-        <tr>
-            <td><a href="/productos/<%= producto.id %>"><%= producto.name %></a></td>
-            <td class="cell-inline">
-                <a class="button button--primary" href="/productos/<%= producto.id %>/edit">Editar</a>
-                <form
-                class="from-delete"
-                action="/productos/<%= producto.id %>?_method=DELETE" 
-                method = "post">
-                
-                <button class="button button--danger" type="submit">Eliminar</button>
-                </form>
-            </td>
-        </tr>
+            <tr>
+                <td><%= producto.id %></td>
+                <td><%= producto.name %></td>
+                <td><%= producto.description %></td>
+                <td>$<%= producto.price %></td>
+                <td><%= producto.stock %></td>
+                <td>
+                    <a href="/productos/<%= producto.id %>/edit" class="btn-aceptar">Editar</a>
+                    <form class="from-delete" action="/productos/<%= producto.id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-cancelar form_button_right">Eliminar</butto>
+                    </form>
+                </td>
+            </tr>
         <% }) %>
-    </body>
+    </tbody>
 </table>
-</section>
 
-<!-- confirmacion de eliminacion -->
+<!-- Scripts de DataTables -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.jqueryui.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.jqueryui.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#productosTable').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+            }
+        });
+    });
+</script>
+
 <script>
     document.addEventListener("submit", (event) => {
         event.preventDefault();
