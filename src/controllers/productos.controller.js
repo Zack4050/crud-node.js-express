@@ -2,10 +2,9 @@
 const model = require('../models/productos');
 const Category = require("../models/Category");
 
-// Mostrar formulario para crear producto
 const create = async (req, res) => {
     try {
-        const categorias = await Category.findAllWithCount(); // o solo findAll si quieres
+        const categorias = await Category.findAllWithCount(); 
         res.render("productos/create", { categorias });
     } catch (error) {
         console.error(error);
@@ -17,7 +16,6 @@ const store = async (req,res) => {
     const { name, price, stock, description , category_id} = req.body;
 
     try {
-        // Llama al modelo con todos los atributos
         const result = await model.store(name, price, stock, description, category_id);
         res.redirect('/productos');
     } catch (error) {

@@ -4,11 +4,12 @@ const router = express.Router();
 const querystring = require('querystring');
 
 const controller = require('../controllers/productos.controller');
+const { isAuthenticated } = require('../middlewares/auth');
 
-router.get('/create', controller.create);
+router.get('/create', isAuthenticated, controller.create);
 router.post('/', controller.store);
 
-router.get('/', controller.index);
+router.get('/', isAuthenticated, controller.index);
 router.get('/:id', controller.show);
 
 router.get('/:id/edit', controller.edit);

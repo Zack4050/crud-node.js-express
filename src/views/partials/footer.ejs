@@ -1,1 +1,19 @@
-<footer> Nelson Avello </footer>
+<footer>
+    <% if (user && user.username) { %>
+        <span>Usuario: <%= user.username %></span>
+        <form id="logoutForm" method="POST">
+            <button type="submit">Cerrar sesión</butto>
+        </form>
+    <% } else { %>
+        <span>No has iniciado sesión</span>
+    <% } %>
+</footer>
+
+<script>
+    document.getElementById('logoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch('/auth/logout', { method: 'POST' })
+            .then(() => window.location.href = '/auth/login')
+            .catch(err => console.error(err));
+    });
+</script>

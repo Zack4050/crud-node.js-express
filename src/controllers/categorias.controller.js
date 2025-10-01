@@ -58,15 +58,18 @@ const update = async (req, res) => {
 
 // Borrar categoría
 const destroy = async (req, res) => {
+    console.log("Llegó al controlador destroy con id:", req.params.id);
     const { id } = req.params;
     try {
         await Category.destroy(id);
         res.redirect("/categorias");
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error al borrar la categoría");
+        res.status(500).send("No se pudo eliminar la categoría");
     }
 };
+
+
 
 // Mostrar productos de una categoría
 const showProducts = async (req, res) => {

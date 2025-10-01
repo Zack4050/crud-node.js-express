@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Registro</title>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+
+            <!-- Botones para alternar -->
+            <div class="toggle-buttons">
+                <button id="showLogin" class="active">Iniciar Sesión</button>
+                <button id="showRegister">Registrarse</button>
+            </div>
+
+            <!-- Formulario Login -->
+            <form id="loginForm" action="/auth/login" method="POST">
+                <h2>Iniciar Sesión</h2>
+                <input type="text" name="username" placeholder="Usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
+
+            <!-- Formulario Registro -->
+            <form id="registerForm" action="/auth/register" method="POST" class="hidden">
+                <h2>Registrarse</h2>
+                <input type="text" name="username" placeholder="Usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <button type="submit">Crear cuenta</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        const showLogin = document.getElementById("showLogin");
+        const showRegister = document.getElementById("showRegister");
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+
+        showLogin.addEventListener("click", () => {
+            loginForm.classList.remove("hidden");
+            registerForm.classList.add("hidden");
+            showLogin.classList.add("active");
+            showRegister.classList.remove("active");
+        });
+
+        showRegister.addEventListener("click", () => {
+            loginForm.classList.add("hidden");
+            registerForm.classList.remove("hidden");
+            showLogin.classList.remove("active");
+            showRegister.classList.add("active");
+        });
+    </script>
+</body>
+</html>

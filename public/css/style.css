@@ -90,17 +90,17 @@ h1 {
 }
 
 .btn-cancelar {
-    display: inline-block;      /* hace que respete padding y ancho */
-    padding: 10px 20px;         /* igual que tu botón */
+    display: inline-block;      
+    padding: 10px 20px;         
     background-color: #f44336;
     color: black;
     border: none;
     border-radius: 5px;
-    text-decoration: none;      /* quita el subrayado */
-    text-align: center;          /* centra el texto */
+    text-decoration: none;      
+    text-align: center;          
     cursor: pointer;
-    font-family: inherit;        /* igual que el botón */
-    font-size: inherit;          /* igual que el botón */
+    font-family: inherit;        
+    font-size: inherit;          
 }
 
 .btn-aceptar:hover {
@@ -175,7 +175,7 @@ h1 {
 }
 
 .imagen {
-    width: 80%;
+    width: 76%;
     height: auto;
     border-radius: 10px;
     margin-top: 1rem;
@@ -192,6 +192,8 @@ footer {
     background-color: rgb(126, 70, 70);
     color: rgb(0, 0, 0);
     font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0.5rem;
 }
 
 p {
@@ -202,18 +204,18 @@ p {
 
 
 
-/* Cambiar tamaño de los botones de paginación */
+
 .dataTables_wrapper .dataTables_paginate a {
-    font-size: 16px;      /* tamaño del texto */
-    padding: 6px 12px;    /* tamaño del botón */
-    background-color: #007bff; /* color de fondo */
-    color: white;         /* color del texto */
-    border-radius: 4px;   /* bordes redondeados */
+    font-size: 16px;     
+    padding: 6px 12px;    
+    background-color: #007bff; 
+    color: white;         
+    border-radius: 4px;  
     text-decoration: none; 
-    margin: 0 2px;        /* separación entre botones */
+    margin: 0 2px;        
 }
 
-/* Cambiar estilo del botón activo (el que muestra el número de página actual) */
+
 .dataTables_wrapper .dataTables_paginate .current {
     background-color: #0056b3;
     color: white;
