@@ -1,17 +1,24 @@
-const querystring = require('querystring');
+//Importamos el modelo
 const model = require('../models/productos');
+const Category = require("../models/Category");
 
-const create = (req,res) => {
-    res.render('productos/create');
-}
+// Mostrar formulario para crear producto
+const create = async (req, res) => {
+    try {
+        const categorias = await Category.findAllWithCount(); // o solo findAll si quieres
+        res.render("productos/create", { categorias });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al obtener categorías");
+    }
+};
 
 const store = async (req,res) => {
-    const { name, price, stock, description } = req.body;
+    const { name, price, stock, description , category_id} = req.body;
 
     try {
         // Llama al modelo con todos los atributos
-        const result = await model.store(name, price, stock, description);
-        console.log(result);
+        const result = await model.store(name, price, stock, description, category_id);
         res.redirect('/productos');
     } catch (error) {
         console.log(error);
@@ -47,10 +54,11 @@ const edit = async (req, res) => {
     const { id } = req.params;
     try {
         const producto = await model.findById(id);
+        const categorias = await Category.findAllWithCount();
         if (!producto) {
             return res.status(404).send("Producto no encontrado");
         }
-        res.render('productos/edit', { producto });
+        res.render('productos/edit', { producto , categorias});
     } catch (error) {
         console.log(error);
         return res.status(500).send("Error al cargar el formulario de edición");
@@ -59,15 +67,16 @@ const edit = async (req, res) => {
 
 const update = async (req, res) => {
     const { id } = req.params;
-    const { name, price, stock, description } = req.body;
+    const { name, price, stock, description , category_id } = req.body;
     try {
-        const result = await model.update(id, name, price, stock, description);
-        res.redirect('/productos/');
+        await model.update(id, name, price, stock, description, category_id);
+        res.redirect("/productos");
     } catch (error) {
-        console.log(error);
-        return res.status(500).send("Error al actualizar el producto");
-    }   
-}
+        console.error(error);
+        res.status(500).send("Error al actualizar el producto");
+    }
+};
+
 
 const destroy = async (req, res) => {
     const { id } = req.params;

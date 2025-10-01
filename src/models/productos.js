@@ -1,14 +1,14 @@
 const pool = require("./mysql");
 
-const store = async (name, price, stock, description) => {
+const store = async (name, price, stock, description, category_id) => {
     const sql = `
         INSERT INTO products 
-        (name, price, stock, description) 
-        VALUES (?, ?, ?, ?)
+        (name, price, stock, description, category_id) 
+        VALUES (?, ?, ?, ?, ?)
     `;
 
     try {
-        const [result] = await pool.query(sql, [name, price, stock, description]);
+        const [result] = await pool.query(sql, [name, price, stock, description, category_id]);
         return result;
     } catch (error) {
         throw error;
@@ -16,14 +16,15 @@ const store = async (name, price, stock, description) => {
 }
 
 const findAll = async () => {
-    const sql = "SELECT * FROM products";   
-    try {
-        const [rows] = await pool.query(sql);
-        return rows;
-    } catch (error) {
-        throw error;
-    }   
-}
+    const sql = `
+        SELECT p.id, p.name, p.description, p.price, p.stock, c.name AS categoria
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+    `;
+    const [rows] = await pool.query(sql);
+    return rows;
+};
+
 
 const findById = async (id) => {
     const sql = "SELECT * FROM products WHERE id = ?";
@@ -35,19 +36,16 @@ const findById = async (id) => {
     }
 }
 
-const update = async (id, name, price, stock, description) => {
+const update = async (id, name, price, stock, description, category_id) => {
     const sql = `
         UPDATE products
-        SET name = ?, price = ?, stock = ?, description = ?
+        SET name = ?, price = ?, stock = ?, description = ?, category_id = ?
         WHERE id = ?
     `;
-    try {
-        const [result] = await pool.query(sql, [name, price, stock, description, id]);
-        return result;
-    } catch (error) {
-        throw error;
-    }
-}
+    const [result] = await pool.query(sql, [name, price, stock, description, category_id, id]);
+    return result;
+};
+
 
 const destroy = async (id) => {
     const sql = "DELETE FROM products WHERE id = ?";

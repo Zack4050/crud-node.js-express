@@ -1,0 +1,46 @@
+<h1>Productos en la categoría: <%= categoria.name %></h1>
+
+<table id="tablaProductos" class="display">
+    <thead>
+        <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (productos.length > 0) { %>
+        <% productos.forEach(producto => { %>
+            <tr>
+            <td><%= producto.id %></td>
+            <td><%= producto.name %></td>
+            <td><%= producto.description %></td>
+            <td>$<%= producto.price %></td>
+            <td><%= producto.stock %></td>
+            </tr>
+        <% }) %>
+        <% } %>
+    </tbody>
+</table>
+
+<a href="/categorias">⬅ Volver a categorías</a>
+
+<!-- Scripts de DataTables -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.jqueryui.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.jqueryui.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#productosTable').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+            }
+        });
+    });
+</script>

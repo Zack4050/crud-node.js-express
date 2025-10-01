@@ -1,101 +1,96 @@
-//Importamos el modelo
-const model  = require("../models/Category");
+const Category = require('../models/Category');
 
-//Funcion para mostrar el formulario
+// Mostrar todas las categorías con cantidad de productos
+const index = async (req, res) => {
+    try {
+        const categorias = await Category.findAllWithCount();
+        res.render("categorias/index", { categorias });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al obtener las categorías");
+    }
+};
+
+// Mostrar formulario para crear nueva categoría
 const create = (req, res) => {
     res.render("categorias/create");
-}
+};
 
-//Funcion para guardar una nueva categoria
-const store = (req, res) => {
-    const {name} = req.body;
-    
-    model.create(name, (error, id) => {
-        if (error) {
-            //return console.error(error);
-            return res.status(500).send("Error al crear la categoria");
-        }
-        console.log(id);
+// Guardar nueva categoría
+const store = async (req, res) => {
+    const { name } = req.body;
+    try {
+        await Category.store(name);
         res.redirect("/categorias");
-    });
-}
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al crear la categoría");
+    }
+};
 
-//Funcion para mostrar y leer todas las categorias
-const index = (req, res) => {
-    model.findAll( (error, categorias) => {
-        if (error) {
-            return res.status(500).send("Error al leer las categorias");
-        }
-        res.render("categorias/index", {categorias} );
-    });
-}
-
-//Funcion para mostrar una categoria
-const show = (req, res) => {
-    const {id} = req.params;
-
-    model.findById(id, (error, categoria) => {
-        if (error) {
-            return res.status(500).send("Error al leer la categoria");
-        }
+// Mostrar formulario para editar categoría
+const edit = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const categoria = await Category.findById(id);
         if (!categoria) {
-            return res.status(404).send("Categoria no encontrada");
+            return res.status(404).send("Categoría no encontrada");
         }
-        res.render("categorias/show", {categoria} );
-    });
-}
+        res.render("categorias/edit", { categoria });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al obtener la categoría");
+    }
+};
 
-//Funcion para mostrar el formulario de edicion
-const edit = (req, res) => {
-    const {id} = req.params;
-    model.findById(id, (error, categoria) => {
-        if (error) {
-            return res.status(500).send("Error al leer la categoria");
-        }
+// Actualizar categoría
+const update = async (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+    try {
+        await Category.update(id, name);
+        res.redirect("/categorias");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al actualizar la categoría");
+    }
+};
+
+// Borrar categoría
+const destroy = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await Category.destroy(id);
+        res.redirect("/categorias");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al borrar la categoría");
+    }
+};
+
+// Mostrar productos de una categoría
+const showProducts = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const categoria = await Category.findById(id);
         if (!categoria) {
-            return res.status(404).send("Categoria no encontrada");
+            return res.status(404).send("Categoría no encontrada");
         }
-        res.render("categorias/edit", {categoria} );
-    });
-}
 
-//Funcion para actualizar una categoria
-const update = (req, res) => {
-    const {id} = req.params;
-    const {name} = req.body;
-
-    model.update(id, name, (error, changes) => {
-        if (error) {
-            return res.status(500).send("Error al actualizar la categoria");
-        }
-        if (changes === 0) {
-            return res.status(404).send("Categoria no encontrada");
-        }
-        res.redirect("/categorias");
-    });
-}
-
-//Funcion para eliminar una categoria
-const destroy = (req, res) => {
-    const {id} = req.params;
-    model.destroy(id, (error, changes) => {
-        if (error) {
-            return res.status(500).send("Error al eliminar la categoria");
-        }
-        if (changes === 0) {
-            return res.status(404).send("Categoria no encontrada");
-        }
-        res.redirect("/categorias");
-    });
-}
-
+        const productos = await Category.findProducts(id);
+        res.render("productosByCategory", { categoria, productos });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al obtener los productos de la categoría");
+    }
+};
 
 module.exports = {
+    index,
     create,
     store,
-    index,
-    show,
     edit,
     update,
-    destroy
-}
+    destroy,
+    showProducts,
+};

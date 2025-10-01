@@ -10,6 +10,7 @@
             <th>Descripción</th>
             <th>Precio</th>
             <th>Stock</th>
+            <th>Categoría</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
                 <td><%= producto.description %></td>
                 <td>$<%= producto.price %></td>
                 <td><%= producto.stock %></td>
+                <th><%= producto.categoria %></th>
                 <td>
                     <a href="/productos/<%= producto.id %>/edit" class="btn-aceptar">Editar</a>
                     <form class="from-delete" action="/productos/<%= producto.id %>?_method=DELETE" method="POST" style="display:inline;">

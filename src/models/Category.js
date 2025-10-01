@@ -1,66 +1,92 @@
-const db = require('./sqlite');
+const pool = require("./mysql");
 
-// Crear una nueva categoria
-const create = (name, callback) => {
-    const sql = `INSERT INTO categories (name) VALUES (?)`;
+// Crear una nueva categoría
+const store = async (name) => {
+    const sql = `
+        INSERT INTO categories (name)
+        VALUES (?)
+    `;
+    try {
+        const [result] = await pool.query(sql, [name]);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
 
-    db.run(sql, [name], function (error) {
-        if (error) {
-            return callback(error);
-        }
-        callback(null, this.lastID);
-    });
-}
+// Obtener todas las categorías con cantidad de productos
+const findAllWithCount = async () => {
+    const sql = `
+        SELECT 
+            c.id,
+            c.name,
+            COUNT(p.id) AS cantidad_productos
+        FROM categories c
+        LEFT JOIN products p ON p.category_id = c.id
+        GROUP BY c.id, c.name
+    `;
+    try {
+        const [rows] = await pool.query(sql);
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+};
 
-// Leer todas las categorias
-const findAll = (callback) => {
-    const sql = `SELECT * FROM categories`;
-    db.all(sql, (error, rows) => {
-        if (error) {
-            return callback(error);
-        }
-        callback(null, rows);
-    });
-}
+// Obtener una categoría por ID
+const findById = async (id) => {
+    const sql = "SELECT * FROM categories WHERE id = ?";
+    try {
+        const [rows] = await pool.query(sql, [id]);
+        return rows[0];
+    } catch (error) {
+        throw error;
+    }
+};
 
-// Buscar una categoria por su ID
-const findById = (id, callback) => {
-    const sql = `SELECT * FROM categories WHERE id = ?`;
+// Listar productos de una categoría
+const findProducts = async (id) => {
+    const sql = `
+        SELECT p.id, p.name, p.description, p.price, p.stock
+        FROM products p
+        WHERE p.category_id = ?
+    `;
+    const [rows] = await pool.query(sql, [id]);
+    return rows;
+};
 
-    db.get(sql, [id], (error, row) => {
-        if (error) {
-            return callback(error);
-        }
-        callback(null, row);
-    });
-}
+// Actualizar el nombre de una categoría
+const update = async (id, name) => {
+    const sql = `
+        UPDATE categories
+        SET name = ?
+        WHERE id = ?
+    `;
+    try {
+        const [result] = await pool.query(sql, [name, id]);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
 
-// Actualizar una categoria por su ID
-const update = (id, name, callback) => {
-    const sql = `UPDATE categories SET name = ? WHERE id = ?`;
-    db.run(sql, [name, id], function (error) {
-        if (error) {
-            return callback(error);
-        }
-        callback(null, this.changes);
-    });
-}
+// Borrar una categoría
+const destroy = async (id) => {
+    const sql = "DELETE FROM categories WHERE id = ?";
+    try {
+        const [result] = await pool.query(sql, [id]);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
 
-const destroy = (id, callback) => {
-    const sql = `DELETE FROM categories WHERE id = ?`;
-    db.run(sql, [id], function (error) {
-        if (error) {
-            return callback(error);
-        }
-        callback(null, this.changes);
-    });
-}
-
-// Exportar las funciones CRUD
+// Exportar funciones
 module.exports = {
-    create,
-    findAll,
+    store,
+    findAllWithCount,
     findById,
     update,
     destroy,
-}
+    findProducts
+};

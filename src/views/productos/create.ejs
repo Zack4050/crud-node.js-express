@@ -13,6 +13,14 @@
 
         <label class="form_label" for="descripcion">Descripcion: </label>
         <input class="form_input" type="text" name="description" id="descripcion">
+
+        <label for="category_id">Categoría:</label>
+        <select name="category_id" id="category_id" required>
+            <option value="">-- Selecciona una categoría --</option>
+            <% categorias.forEach(categoria => { %>
+                <option value="<%= categoria.id %>"><%= categoria.name %></option>
+            <% }) %>
+        </select>
     </div>
     <button class="btn-aceptar" type = "submit">Guardar</button>
     <a href="/productos" class="btn-cancelar form_button_right">Cancelar</a>

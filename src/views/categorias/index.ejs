@@ -1,32 +1,33 @@
 <h1>Listado de Categorías</h1>
 
-<a class = "button button--primary" href="/categorias/create">Agregar categoría</a>
+<a class = "btn-aceptar" href="/categorias/create">Agregar categoría</a>
 
 <section class="listados">
-<table>
-    <thead> 
+<table id="tablaCategorias" class="display">
+    <thead>
         <tr>
+            <th>ID</th>
             <th>Categoría</th>
+            <th>Cantidad de productos</th>
             <th>Acciones</th>
         </tr>
     </thead>
-    <body>
+    <tbody>
         <% categorias.forEach(categoria => { %>
-        <tr>
-            <td><a href="/categorias/<%= categoria.id %>"><%= categoria.name %></a></td>
-            <td class="cell-inline">
-                <a class="button button--primary" href="/categorias/<%= categoria.id %>/edit">Editar</a>
-                <form
-                class="from-delete"
-                action="/categorias/<%= categoria.id %>?_method=DELETE" 
-                method = "post">
-                
-                <button class="button button--danger" type="submit">Eliminar</button>
-                </form>
-            </td>
-        </tr>
+            <tr>
+                <td><%= categoria.id %></td>
+                <td><%= categoria.name %></td>
+                <td class = "cent" ><%= categoria.cantidad_productos %></td>
+                <td>
+                    <a href="/categorias/<%= categoria.id %>" class="btn-aceptar">Ver productos</a>
+                    <a href="/categorias/<%= categoria.id %>/edit" class="btn-aceptar">Editar</a>
+                    <form action="/categorias/<%= categoria.id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-cancelar">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
         <% }) %>
-    </body>
+    </tbody>
 </table>
 </section>
 
